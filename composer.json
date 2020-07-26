@@ -1,0 +1,11 @@
+{
+    "require": {
+
+    },
+    "autoload": {
+        "psr-4": {
+            "express_php\\" : "express_php/",
+            "App\\controllers\\" : "App/controllers/"
+        }
+    }
+}
