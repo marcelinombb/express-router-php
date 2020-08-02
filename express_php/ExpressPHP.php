@@ -1,6 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace express_php;
+
+define("DS", DIRECTORY_SEPARATOR);
 
 class ExpressPHP
 {
@@ -27,14 +31,15 @@ class ExpressPHP
 
     private function handleCallback(string $controller_function)
     {
-        $ControllerMethod = explode("@", $controller_function);
+        $Controler_Method = explode("@", $controller_function);
 
-        $namespace = "\\" . str_replace("/", "\\", $this->controllers_path) . "\\" . $ControllerMethod[0];
+        $namespace = "\\" . str_replace(DS, "\\", $this->controllers_path) . "\\" . $Controler_Method[0];
 
-        if (file_exists("$this->controllers_path/" . $ControllerMethod[0] . ".php")) {
-            call_user_func(array(new $namespace, $ControllerMethod[1]));
+        if (file_exists("$this->controllers_path" . DS . $Controler_Method[0] . ".php")) {
+            call_user_func(array(new $namespace, $Controler_Method[1]));
         } else {
             echo "Essa classe não existe ou seu diretorio informado está incorreto";
         }
     }
+
 }
