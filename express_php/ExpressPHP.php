@@ -8,34 +8,59 @@ define("DS", DIRECTORY_SEPARATOR);
 
 class ExpressPHP
 {
-    private $controllers_path;
+    private static string $controllers_path;
 
+    /**
+     * Undocumented function
+     *
+     * @param string $controllers_path
+     */
     public function __construct(string $controllers_path)
     {
-        $this->controllers_path = $controllers_path;
+        self::$controllers_path = $controllers_path;
     }
-
-    public function get(string $route, string $controller_function)
+    
+    /**
+     * Undocumented function
+     *
+     * @param string $route
+     * @param string $controller_function
+     * @return void
+     */
+    public static function get(string $route, string $controller_function)
     {
         if ($_SERVER['REQUEST_METHOD'] != "GET") return;
         $reqURL = explode('?', $_SERVER["REQUEST_URI"]);
-        if ($reqURL[0] === $route) $this->handleCallback($controller_function);
+        if ($reqURL[0] === $route) self::handleCallback($controller_function);
     }
 
-    public function post(string $route, string $controller_function)
+    /**
+     * Undocumented function
+     *
+     * @param string $route
+     * @param string $controller_function
+     * @return void
+     */
+    public static function post(string $route, string $controller_function)
     {
         if ($_SERVER['REQUEST_METHOD'] != "POST") return;
         $reqURL = $_SERVER["REQUEST_URI"];
-        if ($reqURL === $route) $this->handleCallback($controller_function);
+        if ($reqURL === $route) self::handleCallback($controller_function);
     }
 
-    private function handleCallback(string $controller_function)
+    /**
+     * Undocumented function
+     *
+     * @param string $controller_function
+     * @return void
+     */
+    private static function handleCallback(string $controller_function)
     {
         $Controler_Method = explode("@", $controller_function);
 
-        $namespace = "\\" . str_replace(DS, "\\", $this->controllers_path) . "\\" . $Controler_Method[0];
+        $namespace = "\\" . str_replace(DS, "\\", self::$controllers_path) . "\\" . $Controler_Method[0];
 
-        if (file_exists("$this->controllers_path" . DS . $Controler_Method[0] . ".php")) {
+        if (file_exists(self::$controllers_path . DS . $Controler_Method[0] . ".php")) {
             call_user_func(array(new $namespace, $Controler_Method[1]));
         } else {
             echo "Essa classe não existe ou seu diretorio informado está incorreto";

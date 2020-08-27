@@ -7,5 +7,8 @@
             "express_php\\" : "express_php/",
             "App\\controllers\\" : "App/controllers/"
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.2"
     }
 }
