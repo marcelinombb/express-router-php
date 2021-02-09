@@ -20,6 +20,15 @@ class ExpressPHP
         self::$controllers_path = $controllers_path;
     }
     
+    private function get_method()
+    {
+        return $_SERVER['REQUEST_METHOD'];
+    }
+    
+    private function get_ReqUri()
+    {
+        return $_SERVER["REQUEST_URI"];
+    }
     /**
      * Undocumented function
      *
@@ -29,8 +38,8 @@ class ExpressPHP
      */
     public static function get(string $route, string $controller_function)
     {
-        if ($_SERVER['REQUEST_METHOD'] != "GET") return;
-        $reqURL = explode('?', $_SERVER["REQUEST_URI"]);
+        if ($this->get_method() != "GET") return;
+        $reqURL = explode('?', $this->get_ReqUri());
         if ($reqURL[0] === $route) self::handleCallback($controller_function);
     }
 
@@ -43,8 +52,8 @@ class ExpressPHP
      */
     public static function post(string $route, string $controller_function)
     {
-        if ($_SERVER['REQUEST_METHOD'] != "POST") return;
-        $reqURL = $_SERVER["REQUEST_URI"];
+        if ($this->get_method() != "POST") return;
+        $reqURL = $this->get_ReqUri();
         if ($reqURL === $route) self::handleCallback($controller_function);
     }
 
